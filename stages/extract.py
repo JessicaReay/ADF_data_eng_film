@@ -38,8 +38,8 @@ def extract():
     return [warehouse_df, datalake_df, local_df]
 
 def warehouse_extraction(table, database, user, password, host):
+        dbConnection = None 
         try:
-            global dbConnection
             # Create an engine instance
             alchemyEngine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}/{database}', pool_recycle=3600)
 

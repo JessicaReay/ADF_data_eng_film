@@ -42,13 +42,15 @@ def warehouse_extraction(table, database, user, password, host):
     alchemyEngine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}/{database}', pool_recycle=3600)
 
     # Connect to PostgreSQL server
-    dbConnection = alchemyEngine.connect()
+    dbConnection = alchemyEngine.connect();
 
     # Read data from PostgreSQL database table and load into a DataFrame instance
     sql = f"select * from \"{table}\""
-    warehouse_df = pd.read_sql(sql, dbConnection)
+    warehouse_df = pd.read_sql(sql, dbConnection);
+    pd.set_option('display.expand_frame_repr', False);
 
-    dbConnection.close()
+    if dbConnection:
+        dbConnection.close()
         
     return warehouse_df
 

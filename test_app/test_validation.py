@@ -1,4 +1,7 @@
 import pandas as pd
+from stages.extract import extract
+from stages.transform import transform_merge, generate_report
+from stages.reporting import table
 
 def test_csv_for_merge():
     extracted_warehouse_df = extract()[0]

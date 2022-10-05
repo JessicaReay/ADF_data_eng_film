@@ -4,7 +4,7 @@ from stages.extract import extract
 from stages.transform import transform_merge, generate_report
 from stages.load import load_warehouse, load_datalake, export_report
 from stages.reporting import send_email
-
+ 
 def app():
     logging.basicConfig(filename='pipeline.log', encoding='utf-8', level=logging.DEBUG)
 
@@ -15,7 +15,7 @@ def app():
     table_name= 'IMDB_movie_data'
     to_load_warehouse_df = pd.read_csv('data_files/IMDB-Movie-Data-Postgres.csv') 
     load_warehouse(to_load_warehouse_df, table_name)
-    logging.info("Finished loading csv into database")
+    #logging.info("Finished loading csv into database")
 
     #load IMDB-Movie-Data-S3.csv into AWS S3 Bucket
     logging.info("Starting loading S3 csv file into s3 bucket")

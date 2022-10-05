@@ -31,31 +31,30 @@ def extract():
         service_name, region_name, aws_access_key_id, aws_secret_access_key, s3_bucket = datalake_credentials
         datalake_df = datalake_extraction("IMDB-Movie-Data-S3.csv", service_name, region_name, aws_access_key_id, aws_secret_access_key, s3_bucket)
     else:
-        raise Exception("Extraction failed: error with DB credentials")
+        raise Exception("Extraction failed: error with S3 credentials")
     
     local_df = local_extraction(local_credentials[0])
 
     return [warehouse_df, datalake_df, local_df]
 
 def warehouse_extraction(table, database, user, password, host):
-        try:
-            # Create an engine instance
-            alchemyEngine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}/{database}', pool_recycle=3600)
+    try:
+        # Create an engine instance
+        alchemyEngine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}/{database}', pool_recycle=3600)
 
-            # Connect to PostgreSQL server
-            dbConnection = alchemyEngine.connect()
+        # Connect to PostgreSQL server
+        dbConnection = alchemyEngine.connect()
 
-            # Read data from PostgreSQL database table and load into a DataFrame instance
-            sql = f"select * from \"{table}\""
-            warehouse_df = pd.read_sql(sql, dbConnection)
+        # Read data from PostgreSQL database table and load into a DataFrame instance
+        sql = f"select * from \"{table}\""
+        warehouse_df = pd.read_sql(sql, dbConnection)
 
-        finally:
-            dbConnection.close()
+    finally:
+        dbConnection.close()
         
-        return warehouse_df
+    return warehouse_df
 
 def datalake_extraction(file_name, service_name, region_name, aws_access_key_id, aws_secret_access_key, s3_bucket):
-    
     s3_resource = boto3.resource(
         service_name=service_name,
         region_name=region_name,
@@ -72,6 +71,8 @@ def datalake_extraction(file_name, service_name, region_name, aws_access_key_id,
     return datalake_df
 
 def local_extraction(filepath):
+
     local_df = pd.read_csv(filepath)
+
     return local_df
     

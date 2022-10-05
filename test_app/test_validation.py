@@ -1,9 +1,9 @@
 import pandas as pd
-from stages.transform import generate_report, transform_merge
 from stages.extract import extract
+from stages.transform import transform_merge, generate_report
 from stages.reporting import table
 
-def test_csv_for_merge():
+def test_all_three_files_have_same_len():
     extracted_warehouse_df = extract()[0]
     extracted_datalake_df = extract()[1]
     extracted_local_df = extract()[2]
@@ -13,7 +13,7 @@ def test_csv_for_merge():
     assert len(extracted_datalake_df) == len(extracted_local_df)
     assert len(extracted_warehouse_df) == len(extracted_local_df)
 
-def test_merge():
+def test_merge_were_successful():
     dataframes = extract()
     final_df= transform_merge(dataframes)
 

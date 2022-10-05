@@ -38,12 +38,12 @@ def extract():
     return [warehouse_df, datalake_df, local_df]
 
 def warehouse_extraction(table, database, user, password, host):
-        global dbConnection
         try:
             # Create an engine instance
             alchemyEngine = create_engine(f'postgresql+psycopg2://{user}:{password}@{host}/{database}', pool_recycle=3600)
 
             # Connect to PostgreSQL server
+            global dbConnection
             dbConnection = alchemyEngine.connect()
 
             # Read data from PostgreSQL database table and load into a DataFrame instance

@@ -1,5 +1,9 @@
 import configparser
 
+
+'''
+describe function doing- arguements etc what it returns 
+'''
 def get_credentials(sections, credentials):
 
     config = configparser.ConfigParser()

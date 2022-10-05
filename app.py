@@ -1,9 +1,9 @@
 import logging
 import pandas as pd
-from extract import extract
-from transform import transform_merge, generate_report
-from load import load_warehouse, load_datalake, export_report
-from reporting import send_email
+from stages.extract import extract
+from stages.transform import transform_merge, generate_report
+from stages.load import load_warehouse, load_datalake, export_report
+from stages.reporting import send_email
 
 def app():
     logging.basicConfig(filename='pipeline.log', encoding='utf-8', level=logging.DEBUG)

@@ -1,0 +1,8 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.7, pytest-7.1.3, pluggy-1.0.0
+rootdir: C:\Users\jessi\Documents\ADF_data_eng_film\ADF_data_eng_film
+collected 5 items
+
+test_app\test_validation.py .....                                        [100%]
+
+============================= 5 passed in 45.42s ==============================

@@ -33,7 +33,7 @@ if __name__ == "__main__":
         ["database", "user", "password", "host", "port"], 
         ["service_name", "region_name", "aws_access_key_id", "aws_secret_access_key", "s3_bucket"],
         ["source", "target"],
-        ["smtp_port", "smtp_server", "smtp_sender_email", "smtp_receiver_email", "smtp_password"]
+        ["smtp_port", "smtp_server", "smtp_sender_email", "smtp_receiver_email", "smtp_alerter_email", "smtp_password"]
     ]
     
     # ensuring that the credentials were successful 
@@ -47,6 +47,6 @@ if __name__ == "__main__":
     print(database, user, password, host, port, service_name, region_name, aws_access_key_id, aws_secret_access_key)
     source, target = credentials[sections[2]]
     print("Successful Local (CSV) credentials collection")
-    smtp_port, smtp_server, smtp_sender_email, smtp_receiver_email, smtp_password = credentials[sections[3]]
+    smtp_port, smtp_server, smtp_sender_email, smtp_receiver_email, smtp_alerter_email, smtp_password = credentials[sections[3]]
     print("Sucessful Email (smtp) credentials collection")
     print(database, user, password, host, port, service_name, region_name, aws_access_key_id, aws_secret_access_key, s3_bucket, source, target, smtp_port, smtp_server, smtp_sender_email, smtp_receiver_email, smtp_password)

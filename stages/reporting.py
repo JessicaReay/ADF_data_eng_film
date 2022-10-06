@@ -9,6 +9,13 @@ from tabulate import tabulate
 import datetime
 from stages.authentication import get_credentials
 
+'''
+This report generates the reporting to be sent
+- Table: Inputs the transformed dataframe grouped by genre, outputs the first 5 rows into a tabular format
+- send_email: Inputs the transformed dataframe grouped by genre, outputs sends the email with the table in the message and the exported excel attached.
+
+'''
+
 def table(report_df):  
 
     top_5_data = [[report_df.Rank[0], report_df.index[0], report_df.Revenue_Millions[0]],

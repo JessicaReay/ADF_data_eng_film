@@ -8,6 +8,13 @@ import datetime
 from datetime import date
 import os
 
+'''
+This file alerts any failures
+-check_for_failures: Inputs: directory with pytest results, outputs: if pytest results contain failures: txt file with the pytest results to path 'send_failure_alert', if no failures: print 'no failures'
+-check_failure_file: Inputs: directory 'send_failure_alert' with txt file, if today date is in file send alert, if no file in directory with today dates- print 'no failure'
+-send_alert: sends email with subject alert and date and pytest txt file attached 
+'''
+
 def check_for_failures(directory):
     test_results = [fname for fname in os.listdir(directory) if '.txt' in fname]
     for txt_file in test_results:
@@ -52,7 +59,6 @@ def send_alert():
         ]
 
         credentials = get_credentials(sections, credential_names)
-
         stmp_credentials = credentials[sections[0]]
 
         subject = f"Alert failure {today}"
@@ -62,7 +68,6 @@ def send_alert():
         msg['From'] = stmp_credentials[2]
         msg['To'] = stmp_credentials[3]
         msg['Subject'] = subject
-
         msg.attach(MIMEText(message, 'plain'))
 
         # Setup the attachment

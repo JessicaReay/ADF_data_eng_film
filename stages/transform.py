@@ -10,11 +10,7 @@ to lowest revenue and add column to number the Genre called rank
 
 def transform_index(dataframes):
     
-    extracted_warehouse_df = extract()[0]
-    extracted_datalake_df = extract()[1]
-    extracted_local_df = extract()[2]
-    
-    dataframes= [extracted_warehouse_df, extracted_datalake_df, extracted_local_df]
+    dataframes = extract()
 
     for df in dataframes:
         if "index" in df.columns:

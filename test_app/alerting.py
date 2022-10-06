@@ -9,7 +9,7 @@ from datetime import date
 import os
 
 '''
-This file alerts any failures
+This file alerts any failures, through the following functions: 
 -check_for_failures: Inputs: directory with pytest results, outputs: if pytest results contain failures: txt file with the pytest results to path 'send_failure_alert', if no failures: print 'no failures'
 -check_failure_file: Inputs: directory 'send_failure_alert' with txt file, if today date is in file send alert, if no file in directory with today dates- print 'no failure'
 -send_alert: sends email with subject alert and date and pytest txt file attached 
@@ -29,9 +29,11 @@ def check_for_failures(directory):
             alert_file.write(txt_file)
             alert_file.write(text)
             alert_file.close()
+            print("FAILURE- send alert!")
         else:
-            print("No failed tests found in file:")
-            print(txt_file)
+            print("No failures!")
+            return txt_file
+
 
 def check_failure_file(dir):
     for file in os.listdir(dir):
@@ -40,7 +42,7 @@ def check_failure_file(dir):
         if filetime.date() == date.today():
             send_alert()
         else:
-            print("no failure")
+            print("No failures!")
 
 def send_alert():
         today = str(date.today())
@@ -55,18 +57,18 @@ def send_alert():
         file_location = f'{failure_directory}{file}'
 
         sections = ["stmp"]
-        credential_names = [["smtp_port", "smtp_server", "smtp_sender_email", "smtp_receiver_email", "smtp_password"]
+        credential_names = [["smtp_port", "smtp_server", "smtp_sender_email", "smtp_receiver_email", "smtp_alerter_email", "smtp_password"]
         ]
 
         credentials = get_credentials(sections, credential_names)
-        stmp_credentials = credentials[sections[0]]
+        smtp_port, smtp_server, smtp_sender_email, smtp_receiver_email, smtp_alerter_email, smtp_password = credentials[sections[0]]
 
         subject = f"Alert failure {today}"
         message = f'See Failure Alert attached'
 
         msg = MIMEMultipart()
-        msg['From'] = stmp_credentials[2]
-        msg['To'] = stmp_credentials[3]
+        msg['From'] = smtp_sender_email
+        msg['To'] = smtp_alerter_email
         msg['Subject'] = subject
         msg.attach(MIMEText(message, 'plain'))
 
@@ -81,9 +83,9 @@ def send_alert():
         # Attach the attachment to the MIMEMultipart object
         msg.attach(part)
 
-        server = smtplib.SMTP(stmp_credentials[1], stmp_credentials[0]) #server, port
+        server = smtplib.SMTP(smtp_server, smtp_port) 
         server.starttls()
-        server.login(stmp_credentials[2], stmp_credentials[4]) #sender email, password
+        server.login(smtp_sender_email, smtp_password) 
         text = msg.as_string()
-        server.sendmail(stmp_credentials[2], stmp_credentials[3], text) #sender email, reciever email
+        server.sendmail(smtp_sender_email, smtp_alerter_email, text) 
         server.quit()

@@ -1,5 +1,12 @@
 import pandas as pd
 from stages.extract import extract
+'''
+This file transforms the extracted data into required format for report
+- transform_index: Input extracted dataframes, if any of the dataframes have a column called index sets at the index (known to occur when extracting from data warehouse), outputs dataframes
+- transform_merge: Input extracted dataframes, outputs one dataframe with all dataframes merged into one based on the index.
+- generate_report: Input merged dataframe, outputs a dataframe which has been grouped by Genre and sumed on Revenue and Votes and counted the number of movies made, order by highest revenue 
+to lowest revenue and add column to number the Genre called rank
+'''
 
 def transform_index(dataframes):
     

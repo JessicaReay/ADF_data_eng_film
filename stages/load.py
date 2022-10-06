@@ -3,6 +3,13 @@ import pandas as pd
 from sqlalchemy import create_engine
 from stages.authentication import get_credentials
 
+'''
+This file contains functions to load dataframes into seperate forms
+- load_warehouse: Inputs the dataframe and table name and outputs the dataframe into the corresponding table in database. 
+- load datalake: Inputs the datafile from path provided, outputs the file into a AWS S3 Bucket
+- export_report: Inputs two dataframes (one with the report format and one with the raw merged data), outputs into an excel file in the corresponding path
+'''
+
 def load_warehouse(df, table_name):
     section = "postgresql"
     credential_names = ["database", "user", "password", "host", "port"]
@@ -17,7 +24,7 @@ def load_warehouse(df, table_name):
             # Connect to PostgreSQL server
             dbConnection = alchemyEngine.connect()
             # Upload data to sql database
-            df.to_sql(table_name, dbConnection, if_exists='replace')
+            df.to_sql(table_name, dbConnection, if_exists='replace') #if data already exists, drop the table before inserting new values
 
         finally:
             dbConnection.close()
@@ -42,7 +49,7 @@ def load_datalake(file_name):
             aws_secret_access_key=aws_secret_access_key
         )
 
-        s3_resource.Object(s3_bucket, "data_files\IMDB-Movie-Data-S3.csv").upload_file(file_name)
+        s3_resource.Object(s3_bucket, file_name).upload_file(file_name)
     
     else:
         raise Exception("Upload failed: error with credentials")

@@ -4,6 +4,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 from stages.authentication import get_credentials
 
+'''
+This file contains functions to extract data from three separate sources:
+- extract : no input defined, outputs three seperate databases
+- warehouse_extraction: inputs table to extract from, credentials (database, user, password, host from authentication file), output dataframe
+- datalake_extraction: inputs file name to extract from, credentials (service_name, region_name, aws_access_key_id, aws_secret_access_key, s3_bucket), outputs dataframe
+- local_extraction: inputs filepath to extract from, outputs dataframe
+'''
+
 def extract():
 
     sections = ["postgresql", "aws_s3", "csv"]

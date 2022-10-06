@@ -1,9 +1,13 @@
 import configparser
 
+'''
+This authentication file is used to get the credentials from the config file.
+
+Function inputs: The section in the config file ["postgresql", "aws_s3", "csv", "stmp"] and corresponding credentials defined in the config file. 
+Function outputs: The neccessary credential associated with the corresponding credentials 
 
 '''
-describe function doing- arguements etc what it returns 
-'''
+
 def get_credentials(sections, credentials):
 
     config = configparser.ConfigParser()

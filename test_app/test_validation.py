@@ -3,6 +3,7 @@ from stages.extract import extract
 from stages.transform import transform_merge, generate_report
 from stages.reporting import table
 
+
 def test_all_three_files_have_same_len():
     extracted_warehouse_df = extract()[0]
     extracted_datalake_df = extract()[1]
@@ -20,7 +21,7 @@ def test_merge_were_successful():
     #Arrange
     check_column_1 = final_df['Title_x']
     check_column_2 = final_df['Title_y']
-    check_column_3 = final_df['Title']
+    check_column_3 = final_df['Revenue_Millions']
 
     #Assert
     assert check_column_1.equals(check_column_2)
@@ -34,7 +35,7 @@ def test_rank_insert():
 
     assert max(report_df.Rank) == len(report_df)
 
-def test_genre():
+def test_genre_are_unique():
     dataframes = extract()
     final_df= transform_merge(dataframes)
     report_df= generate_report(final_df)
@@ -42,7 +43,7 @@ def test_genre():
 
     assert len(report_df) == len(unique_df)
 
-def test_top():
+def test_top_genre_revenue():
     dataframes = extract()
     final_df= transform_merge(dataframes)
     report_df= generate_report(final_df)

@@ -3,6 +3,28 @@ platform win32 -- Python 3.10.7, pytest-7.1.3, pluggy-1.0.0
 rootdir: C:\Users\jessi\Documents\ADF_data_eng_film\ADF_data_eng_film
 collected 5 items
 
-test_app\test_validation.py .....                                        [100%]
+test_app\test_validation.py .F...                                        [100%]
 
-============================= 5 passed in 45.42s ==============================
+================================== FAILURES ===================================
+_________________________ test_merge_were_successful __________________________
+
+    def test_merge_were_successful():
+        dataframes = extract()
+        final_df= transform_merge(dataframes)
+    
+        #Arrange
+        check_column_1 = final_df['Title_x']
+        check_column_2 = final_df['Title_y']
+        check_column_3 = final_df['Revenue_Millions']
+    
+        #Assert
+        assert check_column_1.equals(check_column_2)
+>       assert check_column_2.equals(check_column_3)
+E       assert False
+E        +  where False = <bound method NDFrame.equals of 0      Guardians of the Galaxy\n1                   Prometheus\n2                       ...: The Streets\n998               Search Party\n999                 Nine Lives\nName: Title_y, Length: 1000, dtype: object>(0      333.13\n1      126.46\n2      138.12\n3      270.32\n4      325.02\n        ...  \n995       NaN\n996     17.54\n997     58.01\n998       NaN\n999     19.64\nName: Revenue_Millions, Length: 1000, dtype: float64)
+E        +    where <bound method NDFrame.equals of 0      Guardians of the Galaxy\n1                   Prometheus\n2                       ...: The Streets\n998               Search Party\n999                 Nine Lives\nName: Title_y, Length: 1000, dtype: object> = 0      Guardians of the Galaxy\n1                   Prometheus\n2                        Split\n3                        ...2: The Streets\n998               Search Party\n999                 Nine Lives\nName: Title_y, Length: 1000, dtype: object.equals
+
+test_app\test_validation.py:28: AssertionError
+=========================== short test summary info ===========================
+FAILED test_app/test_validation.py::test_merge_were_successful - assert False
+======================== 1 failed, 4 passed in 50.99s =========================
